@@ -17,13 +17,12 @@ final class CardPresenter {
 }
 
 extension CardPresenter {
-    
-    @MainActor
+    @MainActor //  Main View 를 건들이는 함수이기 떄문에 MainActor 사용
     func updateNmberCard() {
         Task {
             let result = try await networkService.getRecords()
             self.numberCardView?.displayCardRecordView(result)
         }
     }
-    
+
 }

@@ -46,6 +46,7 @@ class NetworkService{
             }
             //decode
             return try JSONDecoder().decode(T.self, from: data)
+            
         } catch {
             // Check for invalid JSON (optional)
             if let decodingError = error as? DecodingError {

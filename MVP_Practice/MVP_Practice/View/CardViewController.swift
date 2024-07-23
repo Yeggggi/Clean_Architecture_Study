@@ -10,7 +10,7 @@ import UIKit
 protocol NumberCardViewInterface: AnyObject {
     func displayCardRecordView(_ model: NumberRecord)
 }
-
+//의존성 역전만 나눈상태, 보호 입장에서 View가 Usecase 알고있으니 이걸 끊어놓는것
 class CardViewController: UIViewController {
     
     private let numberView = CardView()
