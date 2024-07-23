@@ -10,11 +10,17 @@ import UIKit
 protocol NumberCardViewInterface: AnyObject {
     func displayCardRecordView(_ model: NumberRecord)
 }
-//의존성 역전만 나눈상태, 보호 입장에서 View가 Usecase 알고있으니 이걸 끊어놓는것
-class CardViewController: UIViewController {
+
+protocol CardPresenterInterface: AnyObject {
+    func setupView(_ numberCardView: NumberCardViewInterface)
+    func updateNmberCard()
+}
+
+//의존성 역전만 나눈상태에서 보호 입장에서 View가 Usecase 알고있으니 이걸 끊어놓음
+final class CardViewController: UIViewController {
     
     private let numberView = CardView()
-    private let presenter = CardPresenter()
+    private let presenter: CardPresenterInterface
     
     override func loadView() {
         view = numberView
@@ -24,6 +30,15 @@ class CardViewController: UIViewController {
         super.viewDidLoad()
         presenter.setupView(self)
         setupEvent()
+    }
+    
+    init(presenter: CardPresenterInterface) {
+        self.presenter = presenter
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -45,9 +60,8 @@ extension CardViewController {
 }
 
 extension CardViewController: NumberCardViewInterface {
-  
+    
     func displayCardRecordView(_ record: NumberRecord) {
-//        numberView.numberRecord.text = String(record.number)
         numberView.content.text = "\(String(record.number)) : \(record.text)"
     }
 }

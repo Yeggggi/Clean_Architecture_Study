@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class CardPresenter {
+final class CardPresenter: CardPresenterInterface {
     private weak var numberCardView: NumberCardViewInterface?
     private let networkService = NetworkService()
     

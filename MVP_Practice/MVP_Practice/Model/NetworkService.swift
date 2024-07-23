@@ -21,16 +21,18 @@ enum DataError: Error {
 }
 
 
-class NetworkService{
+// struct와 class의 사용 이해
+struct NetworkService{
     private let urlString = "http://numbersapi.com/42?json"
     
-
+    // 외부에서 데이터 읽어들일 때 사용
     func getRecords() async throws -> NumberRecord {
         let numberRecord: NumberRecord = try await fetchData()
         return numberRecord
     }
     
     //URLSession, Decode
+    //제네릭을 쓸 때 파라미터로 들어오는 걸로 보통은 추론함, but 이번의 경우엔 return 타입이 NumberRecord이고, Codable 하기 때문에 NumberRecord를 타입으로 추론하고 채택한 경우임
     private func fetchData<T: Decodable>() async throws -> T {
         guard let url = URL(string: urlString) else {
             print("APIError.invalidURL")
